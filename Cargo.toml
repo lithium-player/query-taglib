@@ -1,0 +1,14 @@
+[package]
+authors = ["David Barnett <david@barnett.net.nz>"]
+name = "liquery-taglib"
+version = "0.1.0"
+
+[dependencies]
+taglib = "0.2.0"
+
+[dependencies.liquery]
+git = "https://github.com/lithium-player/query"
+optional = false
+
+[features]
+unstable = []
