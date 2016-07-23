@@ -11,4 +11,6 @@ git = "https://github.com/lithium-player/query"
 optional = false
 
 [features]
+default = []
+use-pkgconfig = ["taglib/use-pkgconfig"]
 unstable = []
