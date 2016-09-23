@@ -4,13 +4,13 @@ extern crate taglib;
 use std::path::Path;
 
 use liquery::Queryable;
-use taglib::{File, Tag};
+use taglib::File;
 
-pub struct AudioFile {
+pub struct QueryTaglib {
     file: File,
 }
 
-impl AudioFile {
+impl QueryTaglib {
     // FIXME: proper error management
     pub fn new<P: AsRef<Path>>(path: P) -> Result<Self, ()> {
         match File::new(path.as_ref().to_str().unwrap()) {
@@ -18,7 +18,7 @@ impl AudioFile {
                 if !file.is_valid() {
                     println!("not valid");
                 }
-                Ok(AudioFile { file: file })
+                Ok(QueryTaglib { file: file })
             }
             Err(e) => {
                 println!("{:?}", e);
@@ -28,7 +28,7 @@ impl AudioFile {
     }
 }
 
-impl Queryable for AudioFile {
+impl Queryable for QueryTaglib {
     fn query(&self, key: &str) -> Option<String> {
         match self.file.tag() {
             Ok(tag) => {
@@ -48,5 +48,15 @@ impl Queryable for AudioFile {
                 None
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::QueryTaglib;
+
+    #[test]
+    fn err_on_invalid_non_existing_file() {
+        assert!(QueryTaglib::new("non-existing").is_err());
     }
 }

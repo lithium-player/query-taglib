@@ -6,7 +6,7 @@ macro_rules! taglib_test_single {
     ($name: ident, $path: expr, $field: expr, $out: expr) => {
         #[test]
         fn $name() {
-            let queryable = AudioFile::new($path).unwrap();
+            let queryable = QueryTaglib::new($path).unwrap();
 
             assert_eq!($out, &queryable.query($field).unwrap());
         }
@@ -17,7 +17,7 @@ macro_rules! taglib_test {
     ($name: ident, $field: expr, $out: expr) => {
         mod $name {
             use liquery::Queryable;
-            use liquery_taglib::AudioFile;
+            use liquery_taglib::QueryTaglib;
 
             taglib_test_single!(flac, "tests/test.flac", $field, $out);
             taglib_test_single!(ogg, "tests/test.ogg", $field, $out);
